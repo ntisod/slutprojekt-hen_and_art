@@ -1,0 +1,7 @@
+C:\Users\elev\Documents\Visual Studio 2017\Projects\Brodder\bin\Debug\Brodder.exe.config
+C:\Users\elev\Documents\Visual Studio 2017\Projects\Brodder\bin\Debug\Brodder.exe
+C:\Users\elev\Documents\Visual Studio 2017\Projects\Brodder\bin\Debug\Brodder.pdb
+C:\Users\elev\Documents\Visual Studio 2017\Projects\Brodder\obj\Debug\Brodder.csprojAssemblyReference.cache
+C:\Users\elev\Documents\Visual Studio 2017\Projects\Brodder\obj\Debug\Brodder.csproj.CoreCompileInputs.cache
+C:\Users\elev\Documents\Visual Studio 2017\Projects\Brodder\obj\Debug\Brodder.exe
+C:\Users\elev\Documents\Visual Studio 2017\Projects\Brodder\obj\Debug\Brodder.pdb
