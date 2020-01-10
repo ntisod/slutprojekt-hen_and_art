@@ -5,3 +5,10 @@ C:\Users\elev\Documents\Visual Studio 2017\Projects\Brodder\obj\Debug\Brodder.cs
 C:\Users\elev\Documents\Visual Studio 2017\Projects\Brodder\obj\Debug\Brodder.csproj.CoreCompileInputs.cache
 C:\Users\elev\Documents\Visual Studio 2017\Projects\Brodder\obj\Debug\Brodder.exe
 C:\Users\elev\Documents\Visual Studio 2017\Projects\Brodder\obj\Debug\Brodder.pdb
+C:\Users\elev\Documents\GitHub\slutprojekt-hen_and_art\Brodder\bin\Debug\Brodder.exe.config
+C:\Users\elev\Documents\GitHub\slutprojekt-hen_and_art\Brodder\bin\Debug\Brodder.exe
+C:\Users\elev\Documents\GitHub\slutprojekt-hen_and_art\Brodder\bin\Debug\Brodder.pdb
+C:\Users\elev\Documents\GitHub\slutprojekt-hen_and_art\Brodder\obj\Debug\Brodder.csprojAssemblyReference.cache
+C:\Users\elev\Documents\GitHub\slutprojekt-hen_and_art\Brodder\obj\Debug\Brodder.csproj.CoreCompileInputs.cache
+C:\Users\elev\Documents\GitHub\slutprojekt-hen_and_art\Brodder\obj\Debug\Brodder.exe
+C:\Users\elev\Documents\GitHub\slutprojekt-hen_and_art\Brodder\obj\Debug\Brodder.pdb

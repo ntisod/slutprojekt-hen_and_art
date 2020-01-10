@@ -1,0 +1,17 @@
+C:\Users\elev\Documents\Visual Studio 2017\Projects\VisualChat\obj\Debug\VisualChat.csprojAssemblyReference.cache
+C:\Users\elev\Documents\Visual Studio 2017\Projects\VisualChat\obj\Debug\SecondWindow.g.cs
+C:\Users\elev\Documents\Visual Studio 2017\Projects\VisualChat\obj\Debug\MainWindow.g.cs
+C:\Users\elev\Documents\Visual Studio 2017\Projects\VisualChat\obj\Debug\App.g.cs
+C:\Users\elev\Documents\Visual Studio 2017\Projects\VisualChat\obj\Debug\VisualChat_MarkupCompile.cache
+C:\Users\elev\Documents\Visual Studio 2017\Projects\VisualChat\obj\Debug\VisualChat_MarkupCompile.lref
+C:\Users\elev\Documents\Visual Studio 2017\Projects\VisualChat\bin\Debug\VisualChat.exe.config
+C:\Users\elev\Documents\Visual Studio 2017\Projects\VisualChat\bin\Debug\VisualChat.exe
+C:\Users\elev\Documents\Visual Studio 2017\Projects\VisualChat\bin\Debug\VisualChat.pdb
+C:\Users\elev\Documents\Visual Studio 2017\Projects\VisualChat\obj\Debug\SecondWindow.baml
+C:\Users\elev\Documents\Visual Studio 2017\Projects\VisualChat\obj\Debug\MainWindow.baml
+C:\Users\elev\Documents\Visual Studio 2017\Projects\VisualChat\obj\Debug\VisualChat.g.resources
+C:\Users\elev\Documents\Visual Studio 2017\Projects\VisualChat\obj\Debug\VisualChat.Properties.Resources.resources
+C:\Users\elev\Documents\Visual Studio 2017\Projects\VisualChat\obj\Debug\VisualChat.csproj.GenerateResource.cache
+C:\Users\elev\Documents\Visual Studio 2017\Projects\VisualChat\obj\Debug\VisualChat.csproj.CoreCompileInputs.cache
+C:\Users\elev\Documents\Visual Studio 2017\Projects\VisualChat\obj\Debug\VisualChat.exe
+C:\Users\elev\Documents\Visual Studio 2017\Projects\VisualChat\obj\Debug\VisualChat.pdb

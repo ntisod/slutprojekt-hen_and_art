@@ -5,3 +5,10 @@ C:\Users\elev\Documents\Visual Studio 2017\Projects\BroadcastChat\bin\Debug\Broa
 C:\Users\elev\Documents\Visual Studio 2017\Projects\BroadcastChat\bin\Debug\BroadcastChat.pdb
 C:\Users\elev\Documents\Visual Studio 2017\Projects\BroadcastChat\obj\Debug\BroadcastChat.exe
 C:\Users\elev\Documents\Visual Studio 2017\Projects\BroadcastChat\obj\Debug\BroadcastChat.pdb
+C:\Users\elev\Documents\GitHub\slutprojekt-hen_and_art\BroadcastChat\bin\Debug\BroadcastChat.exe.config
+C:\Users\elev\Documents\GitHub\slutprojekt-hen_and_art\BroadcastChat\bin\Debug\BroadcastChat.exe
+C:\Users\elev\Documents\GitHub\slutprojekt-hen_and_art\BroadcastChat\bin\Debug\BroadcastChat.pdb
+C:\Users\elev\Documents\GitHub\slutprojekt-hen_and_art\BroadcastChat\obj\Debug\BroadcastChat.csprojAssemblyReference.cache
+C:\Users\elev\Documents\GitHub\slutprojekt-hen_and_art\BroadcastChat\obj\Debug\BroadcastChat.csproj.CoreCompileInputs.cache
+C:\Users\elev\Documents\GitHub\slutprojekt-hen_and_art\BroadcastChat\obj\Debug\BroadcastChat.exe
+C:\Users\elev\Documents\GitHub\slutprojekt-hen_and_art\BroadcastChat\obj\Debug\BroadcastChat.pdb
