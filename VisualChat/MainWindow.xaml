@@ -16,6 +16,7 @@
         <TextBox x:Name="Nickname_box" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Margin="23,98,0,0" TextChanged="Nickname_box_TextChanged"/>
         <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Nickname" VerticalAlignment="Top" Margin="23,75,0,0" Width="58" Height="23"/>
         <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Margin="23,231,0,0" Width="58" Height="23"><Run Text="By: Artur"/><Run Text=" J"/></TextBlock>
+        <TextBox x:Name="SaveBox" HorizontalAlignment="Left" Height="0" Margin="81,292,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="0" IsReadOnly = "True"/>
 
     </Grid>
 </Window>

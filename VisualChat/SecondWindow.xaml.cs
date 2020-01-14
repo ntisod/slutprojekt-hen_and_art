@@ -15,88 +15,258 @@ using System.Windows.Shapes;
 using System.Net;
 using System.Net.Sockets;
 using System.IO;
+using System.ComponentModel;
+using System.Configuration;
 
 namespace VisualChat
 {
 
     public partial class SecondWindow : Window
     {
-        private TcpClient client;
-        public StreamReader STR;
-        public StreamWriter STW;
-        public string recieve;
-        public String TextToSend;
+        MainWindow MainWindow = new MainWindow();
+        static int localPort = Int32.Parse(((MainWindow)Application.Current.MainWindow).port_connect.Text);
+        static string Nickname = ((MainWindow)Application.Current.MainWindow).Nickname_box.Text;
+        string TTS;
 
         public SecondWindow()
         {
             InitializeComponent();
 
-            IPAddress[] localIP = Dns.GetHostAddresses(Dns.GetHostName());
-
-            foreach (IPAddress address in localIP)
+            if (((MainWindow)Application.Current.MainWindow).SaveBox.Text == "host")
             {
-                if (address.AddressFamily == AddressFamily.InterNetwork)
-                {
-                    Ip_connect.Text = address.ToString();
-                }
+                System.Threading.Thread.Sleep(2000);
+                Server.Startserver();
+
             }
-        }
-
-        private void SendButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (SendTextBox.Text != "")
+            else if (((MainWindow)Application.Current.MainWindow).SaveBox.Text == "connect")
             {
-                TextToSend = SendTextBox.Text;
-                Client_disconnect.RunWorkerAsync();
-            }
-            SendTextBox.Text = "";
-        }
-
-        private void ChatTextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
-        }
-
-        private void SendTextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
-        }
-
-        private void Client_connect()
-
-        {
-            while (client.Connected)
-            {
-                try
-                {
-                    recieve = STR.ReadLine();
-                    this.ChatTextBox.Invoke(new MethodInvoker(delegate ()
-                    {
-                        ChatScreentextBox.AppendText("You:" + recieve + "\n");
-                    }));
-                    recieve = "";
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message.ToString());
-                }
-            }
-
-
-        }
-
-        private void Client_disconnect()
-        {
-            if (client.Connected)
-            {
-                STW.WriteLine(TextToSend);
-                this.ChatTextBox.Invoke(new MethodInvoker(delegate () { ChatScreentextBox.AppendText("Me:" + TextToSend + "\n"); }));
+                System.Threading.Thread.Sleep(2000);
+                Client.Startclient();
             }
             else
             {
-                MessageBox.Show("Fel, kan inte skicka text!");
+                MessageBoxResult result = MessageBox.Show("Asså hur kunde starta andra fönstret utan att klicka på knappen...",
+                                    "Fel");
+                Close();
             }
-            Worker.Client_disconnect.CancelAsync();
         }
+
+        
+
+        public void SendButton_Click(object sender, RoutedEventArgs e)
+        {
+            SendText_Box.Text = TTS;
+            SendText_Box.Text += ChatText_Box.Text;
+            SendText_Box.Clear();
+        }
+
+        private void ChatText_Box_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        private void SendText_Box_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        class Server
+        {
+
+            static Socket listeningSocket;
+
+            static List<IPEndPoint> clients = new List<IPEndPoint>();
+
+            public static void Startserver()
+            {
+
+                try
+                {
+                    SecondWindow secondWindow = new SecondWindow();
+                    secondWindow.ChatText_Box.Text += "Server startas";
+
+                    listeningSocket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
+                    Task listeningTask = new Task(Listen);
+                    listeningTask.Start();
+                    listeningTask.Wait();
+                }
+                catch (Exception)
+                {
+                    SecondWindow secondWindow = new SecondWindow();
+                    secondWindow.ChatText_Box.Text += secondWindow.TTS;
+                }
+                finally
+                {
+                    Close();
+                }
+            }
+
+
+            public static void Listen()
+            {
+                try
+                {
+                    
+                    IPEndPoint localIP = new IPEndPoint(IPAddress.Parse("0.0.0.0"), localPort);
+                    listeningSocket.Bind(localIP);
+
+                    while (true)
+                    {
+                        StringBuilder builder = new StringBuilder();
+                        int bytes = 0;
+                        byte[] data = new byte[256];
+                        EndPoint remoteIp = new IPEndPoint(IPAddress.Any, 0);
+                        do
+                        {
+                            bytes = listeningSocket.ReceiveFrom(data, ref remoteIp);
+                            builder.Append(Encoding.Unicode.GetString(data, 0, bytes));
+                        }
+                        while (listeningSocket.Available > 0);
+                        IPEndPoint remoteFullIp = remoteIp as IPEndPoint;
+                        SecondWindow secondWindow = new SecondWindow();
+                        string UIM = secondWindow.SendText_Box.Text;
+                        UIM += builder.ToString() + "\r\n";
+                        bool addClient = true;
+                        for (int i = 0; i < clients.Count; i++)
+                            if (clients[i].Address.ToString() == remoteFullIp.Address.ToString())
+                                addClient = false;
+                        if (addClient == true)  
+                            clients.Add(remoteFullIp);
+                        BroadcastMessage(builder.ToString(), remoteFullIp.Address.ToString());
+                    }
+                }
+                catch (Exception)
+                {
+                    SecondWindow secondWindow = new SecondWindow();
+                    secondWindow.ChatText_Box.Text += secondWindow.TTS;
+                }
+                finally
+                {
+                    Close();
+                }
+            }
+
+
+            private static void BroadcastMessage(string TTS , string ip)
+            {
+                byte[] data = Encoding.Unicode.GetBytes(TTS);
+
+                for (int i = 0; i < clients.Count; i++)
+                    if (clients[i].Address.ToString() != ip)
+                        listeningSocket.SendTo(data, clients[i]);
+            }
+
+
+            private static void Close()
+            {
+                if (listeningSocket != null)
+                {
+                    listeningSocket.Shutdown(SocketShutdown.Both);
+                    listeningSocket.Close();
+                    listeningSocket = null;
+                }
+                SecondWindow secondWindow = new SecondWindow();
+                secondWindow.ChatText_Box.Text += "Server stänge sig själv!";
+            }
+        }
+
+        class Client
+        {
+            static int remotePort;
+            static IPAddress ipAddress;
+            static Socket listeningSocket;
+
+            public static void Startclient()
+            {
+                
+                ipAddress = IPAddress.Parse(((MainWindow)Application.Current.MainWindow).Ip_connect.Text);
+                remotePort = localPort;
+                try
+                {
+                    listeningSocket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
+                    Task listeningTask = new Task(Listen);
+                    listeningTask.Start();
+                    SecondWindow secondWindow = new SecondWindow();
+
+                    while (true)
+                    {
+                        
+
+                        secondWindow.SendButton.Click += (source, e)=>
+                        {
+                            secondWindow.SendText_Box.Text = secondWindow.TTS;
+                        };
+
+
+                        byte[] data = Encoding.Unicode.GetBytes(secondWindow.TTS);
+                        EndPoint remotePoint = new IPEndPoint(ipAddress, remotePort);
+                        listeningSocket.SendTo(data, remotePoint);
+                    }
+                }
+                catch (Exception)
+                {
+                    SecondWindow secondWindow = new SecondWindow();
+                    secondWindow.ChatText_Box.Text += secondWindow.TTS;
+                }
+                finally
+                {
+                    Close();
+                }
+            }
+
+
+            private static void Listen()
+            {
+                try
+                {
+                    IPEndPoint localIP = new IPEndPoint(IPAddress.Parse("0.0.0.0"), 0);
+                    listeningSocket.Bind(localIP);
+
+                    while (true)
+                    {
+                        StringBuilder builder = new StringBuilder();
+                        int bytes = 0;
+                        byte[] data = new byte[256];
+
+                        EndPoint remoteIp = new IPEndPoint(IPAddress.Any, 0);
+
+                        do
+                        {
+                            bytes = listeningSocket.ReceiveFrom(data, ref remoteIp);
+                            builder.Append(Encoding.Unicode.GetString(data, 0, bytes));
+                        }
+                        while (listeningSocket.Available > 0);
+
+                        IPEndPoint remoteFullIp = remoteIp as IPEndPoint;
+
+                        Console.WriteLine("{0}:{1} - {2}", remoteFullIp.Address.ToString(), remoteFullIp.Port, builder.ToString());
+                    }
+                }
+                catch (Exception)
+                {
+                    SecondWindow secondWindow = new SecondWindow();
+                    secondWindow.ChatText_Box.Text += secondWindow.TTS;
+                }
+                finally
+                {
+                    Close();
+                }
+            }
+
+            private static void Close()
+            {
+                if (listeningSocket != null)
+                {
+                    listeningSocket.Shutdown(SocketShutdown.Both);
+                    listeningSocket.Close();
+                    listeningSocket = null;
+                }
+
+                SecondWindow secondWindow = new SecondWindow();
+                secondWindow.ChatText_Box.Text += "Server stänge sig själv!";
+            }
+        }
+
+
     }
 }

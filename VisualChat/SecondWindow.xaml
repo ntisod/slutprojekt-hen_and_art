@@ -7,8 +7,12 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <TextBox x:Name="ChatTextBox" HorizontalAlignment="Left" Height="254" Margin="21,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="747" TextChanged="ChatTextBox_TextChanged"/>
-        <TextBox x:Name="SendTextBox" HorizontalAlignment="Left" Height="115" TextWrapping="Wrap" VerticalAlignment="Top" Width="618" Margin="21,279,0,0" TextChanged="SendTextBox_TextChanged"/>
-        <Button x:Name="SendButton" Content="send&#xD;&#xA;" HorizontalAlignment="Left" VerticalAlignment="Top" Width="116" Margin="652,279,0,0" Height="115" Click="SendButton_Click"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="5*"/>
+            <ColumnDefinition Width="61*"/>
+        </Grid.ColumnDefinitions>
+        <TextBox x:Name="ChatText_Box" HorizontalAlignment="Left" IsReadOnly = "True" Height="254" Margin="21,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="747" TextChanged="ChatText_Box_TextChanged" Grid.ColumnSpan="2"/>
+        <TextBox x:Name="SendText_Box" HorizontalAlignment="Left" Height="115" TextWrapping="Wrap" VerticalAlignment="Top" Width="618" Margin="21,279,0,0" TextChanged="SendText_Box_TextChanged" Grid.ColumnSpan="2"/>
+        <Button x:Name="SendButton" Content="send&#xD;&#xA;" HorizontalAlignment="Left" VerticalAlignment="Top" Width="116" Margin="591.714,279,0,0" Height="115" Click="SendButton_Click" Grid.Column="1"/>
     </Grid>
 </Window>

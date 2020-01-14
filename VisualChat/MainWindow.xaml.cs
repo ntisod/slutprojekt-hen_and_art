@@ -14,128 +14,146 @@ using System.Windows.Shapes;
 using System.Net;
 using System.Net.Sockets;
 using System.IO;
+using System.ComponentModel;
+using System.Threading;
+using System.Configuration;
 
 namespace VisualChat
 {
-
-    /// Interaction logic for MainWindow.xaml
- 
     public partial class MainWindow : Window
     {
-        //variabler som vi kommer använda för stavning kontroll
-        string Ipconnect = null;
-        int Portconnect = -1;
-        string nickname = null;
+        
+        public int ListenPort = -1;
+        
 
-        //andra variabler för server/client
-        private TcpClient client;
-        public StreamReader STR;
-        public StreamWriter STW;
-        public string recieve;
-        public String TextToSend;
-
-        //bara mainwindow
+        
         public MainWindow()
         {
             InitializeComponent();
         }
 
-        public char Reference(ref Ipconnect, nickname, Portconnect)
-        {
-            Ipconnect = Ip_connect.Text;
-            Portconnect = Convert.ToInt32(port_connect.Text);
-            nickname = Nickname_box.Text;
-        }
 
-        //knappen som starta "stavnings" kotroll på alla textbox's så dem är inte tomma 
-        private void Connect_Button_Click(object sender, RoutedEventArgs e)
+        public void Connect_Button_Click(object sender, RoutedEventArgs e)
         {
-            // konverterar textbox's till int
-            Ipconnect = Ip_connect.Text;
-            Portconnect = Convert.ToInt32(port_connect.Text);
-            nickname = Nickname_box.Text;
-
-            //själva scripten
-            if (nickname != null) {
-                if (Ipconnect != null) {
-                    if (Portconnect > -1)
-                    {
-                        Ipconnect = Ip_connect.Text;
-                        Portconnect = Convert.ToInt32(port_connect.Text);
-                        SecondWindow popup = new SecondWindow();
-                        Close();
-                        popup.ShowDialog();
-                    }
-                    {
-                        MessageBoxResult result = MessageBox.Show("Du skrev fel port nummer!",
-                                         "Fel");
-                    }
-                }
-                {
-                    MessageBoxResult result = MessageBox.Show("Du skrev fel Ip address!" + Ipconnect,
-                                         "Fel");
-                }
+            SaveBox.Text = "connect";
+            
+            if (port_connect.Text.Length == 0)
+            {
+                MessageBoxResult result = MessageBox.Show("Du MÅSTE fulla in 'Port' ryta!",
+                                        "Fel");
             }
             else
             {
-                MessageBoxResult result = MessageBox.Show("Du måste fulla in 'nickname' ryta!",
-                                          "Fel");
-            }
-
-            client = new TcpClient();
-            IPEndPoint IpEnd = new IPEndPoint(IPAddress.Parse(Ip_connect.Text), int.Parse(port_connect.Text));
-
-            
-            try
-            {
-                client.Connect(IpEnd);
-
-                if (client.Connected)
+                
+                ListenPort = Convert.ToInt32(port_connect.Text);
+                if (ListenPort < 0)
                 {
-                    ChatTextBox.AppendText("Connected to server" + "\n");
-                    STW = new StreamWriter(client.GetStream());
-                    STR = new StreamReader(client.GetStream());
-                    STW.AutoFlush = true;
-                    Client_connect.RunWorkerAsync();
-                    Client_disconnect.WorkerSupportsCancellation = true;
+                    MessageBoxResult result = MessageBox.Show("Fel port! Port måste vara 0 eller mer!",
+                                        "Fel");
+                }
+                else
+                {
+                    if (Nickname_box.Text.Length != 0)
+                    {
+                        if (Ip_connect.Text.Length != 0)
+                        {
+                            if (port_connect.Text.Length != 0)
+                            {
+                                SecondWindow popup = new SecondWindow();
+                                Close();
+                                popup.ShowDialog();
+                            }else
+                            {
+                                MessageBoxResult result = MessageBox.Show("Du MÅSTE fulla in 'Port' ryta!",
+                                                 "Fel");
+                            }
+                        }else
+                        {
+                            MessageBoxResult result = MessageBox.Show("Du MÅSTE fulla in 'ip address' ryta!");
+                        }
+                    }
+                    else
+                    {
+                        MessageBoxResult result = MessageBox.Show("Du måste fulla in 'nickname' ryta!",
+                                                  "Fel");
+                    }
 
                 }
             }
-            catch (Exception ex)
+           
+        }
+
+        public void Host_button_Click(object sender, RoutedEventArgs e)
+        {
+            SaveBox.Text = "host";
+
+            if (port_connect.Text.Length == 0)
             {
-                MessageBox.Show(ex.Message.ToString());
+                MessageBoxResult result = MessageBox.Show("Du MÅSTE fulla in 'Port' ryta!",
+                                        "Fel");
             }
+            else
+            {
+
+                ListenPort = Convert.ToInt32(port_connect.Text);
+                if (ListenPort < 0)
+                {
+                    MessageBoxResult result = MessageBox.Show("Fel port! Port måste vara 0 eller mer!",
+                                        "Fel");
+                }
+                else{
+
+                    if (Nickname_box.Text.Length != 0)
+                    {
+                        if (Ip_connect.Text.Length != 0)
+                        {
+                            if (port_connect.Text.Length != 0)
+                            {
+                                SecondWindow popup = new SecondWindow();
+                                Close();
+                                popup.ShowDialog();
+                            }
+                            else {
+                                MessageBoxResult result = MessageBox.Show("Du MÅSTE fulla in 'Port' ryta!",
+                                                 "Fel");
+                            }
+                           
+                        }
+                        else{
+                            MessageBoxResult result = MessageBox.Show("Du MÅSTE fulla in 'ip address' ryta!");
+                        }
+                        
+                    }
+                    else{
+                        MessageBoxResult result = MessageBox.Show("Du måste fulla in 'nickname' ryta!",
+                                                  "Fel");
+                    }
+                    
+
+                }
+            }
+
+
         }
 
-        private void Ip_connect_TextChanged(object sender, TextChangedEventArgs e)
+        public void Nickname_box_TextChanged(object sender, TextChangedEventArgs e)
         {
 
-
         }
 
-        private void Port_connect_TextChanged(object sender, TextChangedEventArgs e)
+        public void Ip_connect_TextChanged(object sender, TextChangedEventArgs e)
         {
 
         }
 
-        private void Host_button_Click(object sender, RoutedEventArgs e)
-        {
-            TcpListener listener = new TcpListener(IPAddress.Any, int.Parse(port_connect.Text));
-            listener.Start();
-            client = listener.AcceptTcpClient();
-            STR = new StreamReader(client.GetStream());
-            STW = new StreamWriter(client.GetStream());
-            STW.AutoFlush = true;
-
-            Client_connect.RunWorkerAsync();
-            Client_disconnect.WorkerSupportsCancellation = true;
-
-        }
-
-        private void Nickname_box_TextChanged(object sender, TextChangedEventArgs e)
+        public void Port_connect_TextChanged(object sender, TextChangedEventArgs e)
         {
 
         }
 
+        private void SaveBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
     }
 }

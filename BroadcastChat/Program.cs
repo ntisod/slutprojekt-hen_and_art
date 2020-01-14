@@ -17,7 +17,7 @@ namespace BroadcastChat
         {
             //ip addressen som man skickar förfrågor, man kan ändra den så den stämmer med din local nätverk ip
             // man kan kolla detta i terminal men commanden ipconfig
-            IPAddress address = IPAddress.Parse("192.168.80.109");
+            IPAddress address = IPAddress.Parse("192.168.43.124");
             //skapar socket
             Socket socket = new Socket(AddressFamily.InterNetwork,
                 SocketType.Dgram, ProtocolType.Udp);
