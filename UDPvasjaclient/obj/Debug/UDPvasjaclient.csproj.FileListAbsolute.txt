@@ -1,0 +1,7 @@
+C:\Users\elev\Documents\Visual Studio 2017\Projects\UDPvasjaclient\obj\Debug\UDPvasjaclient.csprojAssemblyReference.cache
+C:\Users\elev\Documents\Visual Studio 2017\Projects\UDPvasjaclient\obj\Debug\UDPvasjaclient.csproj.CoreCompileInputs.cache
+C:\Users\elev\Documents\Visual Studio 2017\Projects\UDPvasjaclient\bin\Debug\UDPvasjaclient.exe.config
+C:\Users\elev\Documents\Visual Studio 2017\Projects\UDPvasjaclient\bin\Debug\UDPvasjaclient.exe
+C:\Users\elev\Documents\Visual Studio 2017\Projects\UDPvasjaclient\bin\Debug\UDPvasjaclient.pdb
+C:\Users\elev\Documents\Visual Studio 2017\Projects\UDPvasjaclient\obj\Debug\UDPvasjaclient.exe
+C:\Users\elev\Documents\Visual Studio 2017\Projects\UDPvasjaclient\obj\Debug\UDPvasjaclient.pdb
