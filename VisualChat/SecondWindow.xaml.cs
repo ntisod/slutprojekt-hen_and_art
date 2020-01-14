@@ -23,7 +23,7 @@ namespace VisualChat
 
     public partial class SecondWindow : Window
     {
-        MainWindow MainWindow = new MainWindow();
+        //MainWindow MainWindow = new MainWindow();
         static int localPort = Int32.Parse(((MainWindow)Application.Current.MainWindow).port_connect.Text);
         static string Nickname = ((MainWindow)Application.Current.MainWindow).Nickname_box.Text;
         string TTS;
@@ -35,7 +35,9 @@ namespace VisualChat
             if (((MainWindow)Application.Current.MainWindow).SaveBox.Text == "host")
             {
                 System.Threading.Thread.Sleep(2000);
-                Server.Startserver();
+                
+                
+                
 
             }
             else if (((MainWindow)Application.Current.MainWindow).SaveBox.Text == "connect")
@@ -50,6 +52,8 @@ namespace VisualChat
                 Close();
             }
         }
+
+        
 
         
 
@@ -70,19 +74,25 @@ namespace VisualChat
 
         }
 
+
+        
+
+
+
         class Server
         {
-
+           
+            
             static Socket listeningSocket;
 
             static List<IPEndPoint> clients = new List<IPEndPoint>();
 
-            public static void Startserver()
+            public static void Startserver(SecondWindow secondWindow)
             {
-
+                
                 try
                 {
-                    SecondWindow secondWindow = new SecondWindow();
+                    
                     secondWindow.ChatText_Box.Text += "Server startas";
 
                     listeningSocket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
@@ -92,7 +102,6 @@ namespace VisualChat
                 }
                 catch (Exception)
                 {
-                    SecondWindow secondWindow = new SecondWindow();
                     secondWindow.ChatText_Box.Text += secondWindow.TTS;
                 }
                 finally
@@ -123,8 +132,10 @@ namespace VisualChat
                         }
                         while (listeningSocket.Available > 0);
                         IPEndPoint remoteFullIp = remoteIp as IPEndPoint;
+
                         SecondWindow secondWindow = new SecondWindow();
                         string UIM = secondWindow.SendText_Box.Text;
+
                         UIM += builder.ToString() + "\r\n";
                         bool addClient = true;
                         for (int i = 0; i < clients.Count; i++)
@@ -139,6 +150,7 @@ namespace VisualChat
                 {
                     SecondWindow secondWindow = new SecondWindow();
                     secondWindow.ChatText_Box.Text += secondWindow.TTS;
+
                 }
                 finally
                 {
